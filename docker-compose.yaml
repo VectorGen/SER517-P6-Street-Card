@@ -1,0 +1,49 @@
+version: "3.2"
+services:
+  cache:
+    container_name: cache
+    image: memcached:latest
+    ports:
+      - "11211:11211"
+    entrypoint:
+      - memcached
+      - -m 64
+  rabbit:
+    container_name: rabbit
+    image: rabbitmq:latest
+    ports:
+      - "5672:5672"
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_DB=streetcard2
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+  backend:
+    container_name: backend
+    env_file:
+      - ./backend/.env
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    stdin_open: true
+    tty: true
+    links:
+      - cache
+      - rabbit
+    depends_on:
+      - db
+  frontend:
+    container_name: frontend
+    env_file:
+      - ./frontend/.env
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "80:3000"
+    depends_on:
+      - backend
+      - db
