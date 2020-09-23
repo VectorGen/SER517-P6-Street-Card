@@ -117,7 +117,7 @@ GitHub.sublime-settings
 .history
 
 .DS_Store
-/backend/api/StreetCardServices/migrations/
+# /backend/api/StreetCardServices/migrations/
 
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
