@@ -1,7 +1,8 @@
-FROM ubuntu:18.04
+FROM python:latest
 RUN apt-get update \
-  && apt-get install -y python3-pip python3-dev libpq-dev \
-  && apt-get install -y vim
+    && apt-get install -y --no-install-recommends \
+        postgresql-client \
+    && rm -rf /var/lib/apt/lists/*
 WORKDIR /src/backend
 COPY requirements.txt /src/backend
 RUN pip3 install -r requirements.txt

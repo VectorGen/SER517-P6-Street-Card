@@ -13,9 +13,10 @@ class SocialWorker extends React.Component {
         if (this.props.loggedInStatus === "LOGGED_IN") {
             var localClearanceLevel = '';
             var localserviceProvider = '';
+            console.log(localStorage.getItem('token'))
             fetch(process.env.REACT_APP_IP + 'user/' + this.props.username + '/', {
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                    Authorization: `Bearer ${localStorage.getItem('token')}`,
                 }
             })
                 .then(res => res.json())

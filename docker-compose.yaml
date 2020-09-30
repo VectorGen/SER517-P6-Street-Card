@@ -1,5 +1,20 @@
 version: "3.2"
 services:
+  db:
+    container_name: db
+    image: jcahal/streetcard_db
+    ports: 
+      - "5432:5432"
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    depends_on:
+      - db
+    ports:
+      - "5051:80"
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=pgadmin4@pgadmin.org
+      - PGADMIN_DEFAULT_PASSWORD=root
   cache:
     container_name: cache
     image: memcached:latest
@@ -15,13 +30,19 @@ services:
       - "5672:5672"
   backend:
     container_name: backend
+    image: jcahal/streetcard_backend
+    depends_on:
+      - db
     env_file:
       - ./backend/.env
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
+    # Build not necessary because image is kept in repo
+    #build:
+    #  context: ./backend
+    #  dockerfile: Dockerfile
     ports:
       - "8000:8000"
+    volumes: 
+      - "./backend:/src/backend"
     stdin_open: true
     tty: true
     links:
@@ -29,13 +50,18 @@ services:
       - rabbit
   frontend:
     container_name: frontend
+    image: jcahal/streetcard_frontend
+    stdin_open: true
     env_file:
       - ./frontend/.env
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
+    # Build not necessary because image is kept in repo  
+    #build:
+    #  context: ./frontend
+    #  dockerfile: Dockerfile
     ports:
       - "80:3000"
+    volumes: 
+      - "./frontend:/src/frontend"
     depends_on:
       - backend
 
