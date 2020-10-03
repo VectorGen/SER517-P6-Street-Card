@@ -1,8 +1,4 @@
 FROM python:latest
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-        postgresql-client \
-    && rm -rf /var/lib/apt/lists/*
 WORKDIR /src/backend
 COPY requirements.txt /src/backend
 RUN pip3 install -r requirements.txt
