@@ -231,7 +231,12 @@ const clearanceLevel = [
     {
         value: "admin",
         label: "Admin"
+    },
+    {
+        value: "intakeWorker",
+        label: "Intake Worker"
     }
+
 ];
 
 

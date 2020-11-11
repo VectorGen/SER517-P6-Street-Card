@@ -17,6 +17,8 @@ import viewAllEnrollment from './viewAllEnrollment'
 import viewEnrollmentDetails from './viewEnrollmentDetails'
 import ClientLanding from './ClientLanding'
 import ClientPersonalInfo from "./ClientPersonalInfo";
+import IntakeWorkerLanding from './IntakeWorkerLanding';
+import IntakeWorkerPersonalInfo from "./IntakeWorkerPersonalInfo";
 import Transaction from "./Transaction"
 import SuccessfulRegistration from "./SuccessfulRegistration";
 import LoginError from "./LoginError";
@@ -371,6 +373,20 @@ export default class App extends React.Component {
                             handleHomelessPersonJson={this.handleHomelessPersonJson}
                             handleAppointmentJson={this.handleAppointmentJson}
                         />
+
+                        <PrivateRoute
+                            exact
+                            path={"/intakeWorkerLanding"}
+                            component={IntakeWorkerLanding}
+                            username={this.state.username}
+                            loggedInStatus={this.state.loggedInStatus}
+                            clearanceLevel={this.state.clearanceLevel}
+                            serviceProvider={this.state.serviceProvider}
+                            handleLogout={this.handleLogout}
+                            handleHomelessPersonJson={this.handleHomelessPersonJson}
+                            handleAppointmentJson={this.handleAppointmentJson}
+                        />
+
                         <PrivateRoute
                             exact
                             path={"/clientInfo"}
@@ -384,6 +400,21 @@ export default class App extends React.Component {
                             homelessData={this.state.homelessData}
                             appointmentData={this.state.xyz}
                         />
+
+                        <PrivateRoute
+                            exact
+                            path={"/intakeWorkerInfo"}
+                            component={IntakeWorkerPersonalInfo}
+                            username={this.state.username}
+                            loggedInStatus={this.state.loggedInStatus}
+                            clearanceLevel={this.state.clearanceLevel}
+                            serviceProvider={this.state.serviceProvider}
+                            homelessPersonId={this.state.handleHomelessPersonId}
+                            handleLogout={this.handleLogout}
+                            homelessData={this.state.homelessData}
+                            appointmentData={this.state.xyz}
+                        />
+
                         <PrivateRoute
                             exact
                             path={"/success"}
