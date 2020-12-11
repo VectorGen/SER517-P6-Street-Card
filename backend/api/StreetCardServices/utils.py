@@ -47,3 +47,15 @@ def is_service_provider(user):
     This method is to check whether user is a service provider.
     """
     return user.groups.filter(name='service_provider').exists()
+
+def is_nurse(user):
+    """
+    This method is to check whether user is a nurse.
+    """
+    return user.groups.filter(name='nurse').exists()
+
+def is_treating_physician(user):
+    """
+    This method is to check whether user is a treating physician.
+    """
+    return user.groups.filter(name='treating_physician').exists()

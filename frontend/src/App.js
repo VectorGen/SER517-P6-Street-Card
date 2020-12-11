@@ -17,6 +17,8 @@ import viewAllEnrollment from './viewAllEnrollment'
 import viewEnrollmentDetails from './viewEnrollmentDetails'
 import ClientLanding from './ClientLanding'
 import ClientPersonalInfo from "./ClientPersonalInfo";
+import NurseLanding from './NurseLanding';
+import TreatingPhysicianLanding from './TreatingPhysicianLanding';
 import Transaction from "./Transaction"
 import SuccessfulRegistration from "./SuccessfulRegistration";
 import LoginError from "./LoginError";
@@ -25,7 +27,8 @@ import SuccessfulUpdate from "./SuccessfulUpdate";
 import TransactionComplete from "./TransactionComplete";
 import AddProductSuccess from "./AddProductSuccess";
 import UpdateSocialWorkerInfoForm from "./UpdateSocialWorkerInfo";
-import SuccessfulSocialRegistration from "./SuccessfulSocialRegistration"
+import SuccessfulSocialRegistration from "./SuccessfulSocialRegistration";
+import ErrorSocialRegistration from "./ErrorSocialRegistration";
 
 const PrivateRoute = ({component: Component, loggedInStatus: loggedInStatus, ...rest}) => (
     <Route render={(props) => (
@@ -371,6 +374,7 @@ export default class App extends React.Component {
                             handleHomelessPersonJson={this.handleHomelessPersonJson}
                             handleAppointmentJson={this.handleAppointmentJson}
                         />
+
                         <PrivateRoute
                             exact
                             path={"/clientInfo"}
@@ -383,6 +387,31 @@ export default class App extends React.Component {
                             handleLogout={this.handleLogout}
                             homelessData={this.state.homelessData}
                             appointmentData={this.state.xyz}
+                        />
+
+                        <PrivateRoute
+                            exact
+                            path={"/nurseLanding"}
+                            component={NurseLanding}
+                            username={this.state.username}
+                            loggedInStatus={this.state.loggedInStatus}
+                            clearanceLevel={this.state.clearanceLevel}
+                            serviceProvider={this.state.serviceProvider}
+                            handleLogout={this.handleLogout}
+                            handleHomelessPersonJson={this.handleHomelessPersonJson}
+                            handleAppointmentJson={this.handleAppointmentJson}
+                        />
+                        <PrivateRoute
+                            exact
+                            path={"/treatingPhysicianLanding"}
+                            component={TreatingPhysicianLanding}
+                            username={this.state.username}
+                            loggedInStatus={this.state.loggedInStatus}
+                            clearanceLevel={this.state.clearanceLevel}
+                            serviceProvider={this.state.serviceProvider}
+                            handleLogout={this.handleLogout}
+                            handleHomelessPersonJson={this.handleHomelessPersonJson}
+                            handleAppointmentJson={this.handleAppointmentJson}
                         />
                         <PrivateRoute
                             exact
@@ -402,7 +431,15 @@ export default class App extends React.Component {
                             handleLogout={this.handleLogout}
                             updatePageComponent={this.updatePageComponent}
                         />
-
+                        <PrivateRoute
+                            exact
+                            path={"/error"}
+                            component={ErrorSocialRegistration}
+                            loggedInStatus={this.state.loggedInStatus}
+                            homelessPersonId={this.state.homelessPersonId}
+                            handleLogout={this.handleLogout}
+                            updatePageComponent={this.updatePageComponent}
+                        />
                         <PrivateRoute
                             exact
                             path={"/successUpdate"}

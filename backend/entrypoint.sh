@@ -1,6 +1,5 @@
 #!/bin/bash
-python3 manage.py makemigrations &
-python3 manage.py migrate
+python3 manage.py makemigrations && python3 manage.py migrate
 
 # Start Celery Workers
 celery -A api worker -l info &

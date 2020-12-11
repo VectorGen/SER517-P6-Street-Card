@@ -1,12 +1,22 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 import './index.css';
-import {Alert, Collapse, Descriptions, Form, Layout} from 'antd';
+import {Alert, Collapse, Descriptions, Form, Layout, Button} from 'antd';
 import Header from './Header'
 import StreetCardFooter from './StreetCardFooter'
 import moment from "moment";
+import OauthPopup from 'react-oauth-popup'
 
 const {Content} = Layout;
+
+const OAuthOnCode = (code, params) => {
+    console.log("OAuth Code: ", code);
+    console.log("OAuth Params: ", params);
+}
+
+const OAuthOnClose = () => {
+    console.log('OAuthOnClose')
+}
 
 class ClientPersonalInfo extends React.Component {
     constructor(props) {
@@ -17,30 +27,36 @@ class ClientPersonalInfo extends React.Component {
             appointment: {},
         }
         this.handleSuccessfulLogoutAction = this.handleSuccessfulLogoutAction.bind(this)
-        this.test = this.test.bind(this)
+        
+        // DEVELOPMENT
+        // this.test = this.test.bind(this)
     }
 
-    test() {
-        let homelessPersonId = this.props.homelessData.PersonalId;
-        fetch(process.env.REACT_APP_IP + 'homeless/' + homelessPersonId + '/appointment/', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${localStorage.getItem('token')}`
-            },
-        })
-            .then(res => res.json())
-            .then(json => {
-                this.setState({
-                        isLoaded: true,
-                        appointment: json,
-                    }
-                )
-            })
-    }
+    // DEVELOPMENT - Removing the test() stops the checking for appoinments for roles other thatn client.
+    //               This should be un commented for production and a new component and route should be 
+    //               created to allow roles to view client info
+    // test() {
+    //     let homelessPersonId = this.props.homelessData.PersonalId;
+    //     fetch(process.env.REACT_APP_IP + 'homeless/' + homelessPersonId + '/appointment/', {
+    //         method: 'GET',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             Authorization: `Bearer ${localStorage.getItem('token')}`
+    //         },
+    //     })
+    //         .then(res => res.json())
+    //         .then(json => {
+    //             this.setState({
+    //                     isLoaded: true,
+    //                     appointment: json,
+    //                 }
+    //             )
+    //         })
+    // }
 
     componentDidMount() {
-        setTimeout(this.test(), 7000);
+        //DEVELOPMENT
+        //setTimeout(this.test(), 7000);
 
     }
 
@@ -212,6 +228,16 @@ class ClientPersonalInfo extends React.Component {
                             </Descriptions>
                         </div>
                     </div>
+
+                    <OauthPopup
+                        // TODO: OAuth logic
+                        url="https://fhir.epic.com/interconnect-fhir-oauth/oauth2/authorize?scope=launch&response_type=code&redirect_uri=localhost&client_id=186c09d3-8833-4ab0-a9b4-1ee3a8845b9d"
+                        onCode={OAuthOnCode}
+                        onClose={OAuthOnClose}
+                        >
+                        <Button type="primary" id="get-electronic-health-records">Get Medical Health Records</Button>
+                    </OauthPopup>
+                    <div id="electronic-health-records"></div>
                 </Content>
                 <StreetCardFooter/>
             </Layout>

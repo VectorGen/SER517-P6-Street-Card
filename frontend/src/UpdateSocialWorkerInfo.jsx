@@ -30,6 +30,14 @@ const clearanceLevel = [
     {
         value: "admin",
         label: "Admin"
+    },
+    {
+        value: "nurse",
+        label: "Nurse"
+    },
+    {
+        value: "treating_physician",
+        label: "Treating Physician"
     }
 ];
 
