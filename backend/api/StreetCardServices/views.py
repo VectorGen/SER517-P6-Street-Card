@@ -16,7 +16,7 @@ from .serializers import UserSerializer, GroupSerializer, SocialWorkerSerializer
     HomelessSerializer, UserNameAndIdMappingSerializer, LogSerializer, \
     AppointmentSerializer, ProductSerializer, TransactionSerializer
 from .tasks import send_email_task, revoke_email_task
-from .utils import primary_key_generator, is_greeter, is_client, is_caseworker, is_service_provider, is_nurse, is_treating_physician
+from .utils import primary_key_generator, is_greeter, is_client, is_caseworker, is_service_provider, is_nurse, is_treating_physician, is_psychiatrist
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -109,7 +109,7 @@ class UserMapping(viewsets.ModelViewSet):
 class HomelessViewSet(viewsets.ViewSet):
 
     def list(self, request):
-        if is_greeter(request.user) or is_caseworker(request.user) or is_nurse(request.user) or is_treating_physician(request.user):
+        if is_greeter(request.user) or is_caseworker(request.user) or is_nurse(request.user) or is_treating_physician(request.user) or is_psychiatrist(request.user):
             cache_key = 'homeless'
             data = cache.get(cache_key)
             if data is None:
@@ -128,7 +128,7 @@ class HomelessViewSet(viewsets.ViewSet):
     def retrieve(self, request, pk=None):
         # TODO: Fix error in the is_role() implimentation
         # PRODUCTION - in production, the retrieval of homless data should be limited
-        # if is_greeter(request.user) or is_client(request.user) or is_caseworker(request.user) or is_nurse(request.user) or is_treating_physician(request.user):
+        # if is_greeter(request.user) or is_client(request.user) or is_caseworker(request.user) or is_nurse(request.user) or is_treating_physician(request.user), is_psychiatrist(request.user):
         
         # DEVELOPMENT - allows anyone to get homeless person data
         if True:

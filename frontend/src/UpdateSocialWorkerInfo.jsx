@@ -38,7 +38,11 @@ const clearanceLevel = [
     {
         value: "treating_physician",
         label: "Treating Physician"
-    }
+    },
+    {
+        value: "psychiatrist",
+        label: "Psychiatrist"
+    },
 ];
 
 
