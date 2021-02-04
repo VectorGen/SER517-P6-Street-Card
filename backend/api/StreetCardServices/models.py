@@ -251,6 +251,7 @@ class SocialWorker(models.Model):
         ADMIN = "admin", _("Admin")
         NURSE = "nurse", _("Nurse")
         TREATING_PYSICIAN = "treating_physician", _("Treating Physician")
+        PSYCHIATRIST = "psychiatrist", _("Psychiatrist")
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     clearanceLevel = models.TextField(choices=ClearanceLevel.choices)

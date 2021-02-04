@@ -59,3 +59,9 @@ def is_treating_physician(user):
     This method is to check whether user is a treating physician.
     """
     return user.groups.filter(name='treating_physician').exists()
+
+def is_psychiatrist(user):
+    """
+    This method is to check whether user is a psychiatrist
+    """
+    return user.groups.filter(name='psychiatrist').exists()
