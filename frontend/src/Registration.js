@@ -231,6 +231,14 @@ const clearanceLevel = [
     {
         value: "admin",
         label: "Admin"
+    },
+    {
+        value: "nurse",
+        label: "Nurse"
+    },
+    {
+        value: "treating_physician",
+        label: "Treating Physician"
     }
 ];
 
@@ -269,6 +277,7 @@ class RegistrationForm extends React.Component {
         autoCompleteResult: [],
         pageComponent: this.props.pageComponent,
         loginPageStatus: "LOGIN_HEADER",
+        apiResponse: ''
     };
 
     constructor(props) {
@@ -395,6 +404,10 @@ class RegistrationForm extends React.Component {
                     .then(res => {
                         if (res.status === 201) {
                             this.props.history.push('/successful');
+                            console.log(res.json)
+                        }
+                        else {
+                            this.props.history.push('/error');
                         }
                     });
 
@@ -498,11 +511,12 @@ class RegistrationForm extends React.Component {
                         Authorization: `Bearer ${localStorage.getItem('token')}`
                     },
                     body: JSON.stringify(registerRequestObject)
-                })
+                }) 
                     .then(res => res.json())
                     .then(json => {
                         this.props.handleHomelessPersonId(registerRequestObject.PersonalId);
-                        this.props.history.push('/success');
+                        this.state.apiResponse = json;
+                        //this.props.history.push('/success');
                     });
             }
         });
@@ -536,6 +550,7 @@ class RegistrationForm extends React.Component {
                                 <div className="site-layout-content-homeless">
                                     <Form {...formItemLayout} name="enrollment"
                                           onSubmit={this.handleHomelessPersonRegistrationSubmit}>
+                                              <h3 value={this.state.apiResponse}></h3>
                                         <Collapse style={{backgroundColor: "#f0f9ff"}}>
                                             <Panel header="Name Information" key="1">
                                                 <Row gutter={8}>

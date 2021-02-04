@@ -15,7 +15,7 @@ class SocialWorker extends React.Component {
             var localserviceProvider = '';
             fetch(process.env.REACT_APP_IP + 'user/' + this.props.username + '/', {
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                    Authorization: `Bearer ${localStorage.getItem('token')}`,
                 }
             })
                 .then(res => res.json())
@@ -35,7 +35,11 @@ class SocialWorker extends React.Component {
                         this.props.history.push('/serviceProvider');
                     } else if (this.state.clearanceLevel == "admin") {
                         this.props.history.push('/socialWorkerRegister');
-                    } else {
+                    } else if (this.state.clearanceLevel == "nurse") {
+                        this.props.history.push('/nurseLanding');
+                    } else if (this.state.clearanceLevel == "treating_physician") {
+                        this.props.history.push('/treatingPhysicianLanding');
+                    }else {
                         this.props.history.push('/greeter');
                     }
                 });

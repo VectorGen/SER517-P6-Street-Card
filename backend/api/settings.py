@@ -37,10 +37,10 @@ def get_val_from_env(django_var):
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.urandom(24) #get_val_from_env('SECRET_KEY')
+SECRET_KEY = get_val_from_env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -95,12 +95,12 @@ WSGI_APPLICATION = 'api.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'USER': 'postgres', #get_val_from_env('DB_USER'),
-        'PASSWORD': 'postgres', #get_val_from_env('DB_PASSWORD'),
-        'HOST': 'localhost', #get_val_from_env('DB_HOST'),
-        'PORT': '5432', #int(get_val_from_env('DB_PORT')),
-        'NAME': 'streetcard2', #get_val_from_env('DB_NAME'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'USER': get_val_from_env('DB_USER'),
+        'PASSWORD': get_val_from_env('DB_PASSWORD'),
+        'HOST': get_val_from_env('DB_HOST'),
+        'PORT': int(get_val_from_env('DB_PORT')),
+        'NAME': get_val_from_env('DB_NAME'),
     }
 }
 
@@ -145,7 +145,7 @@ REST_FRAMEWORK = {
     # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     # 'PAGE_SIZE': 10,
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.AllowAny',
+        'rest_framework.permissions.IsAuthenticated',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
@@ -184,9 +184,11 @@ CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_WHITELIST = [
     'http://frontend:3000',
+    'http://localhost'
 ]
 CORS_ORIGIN_REGEX_WHITELIST = [
     'http://frontend:3000',
+    'http://localhost'
 ]
 
 # Celery Config Options:
@@ -209,8 +211,8 @@ CELERY_TASK_SERIALIZER = 'json'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-# EMAIL_HOST_USER = get_val_from_env('DJANGO_EMAIL_USR')
-# EMAIL_HOST_PASSWORD = get_val_from_env('DJANGO_EMAIL_PWD')
+EMAIL_HOST_USER = get_val_from_env('DJANGO_EMAIL_USR')
+EMAIL_HOST_PASSWORD = get_val_from_env('DJANGO_EMAIL_PWD')
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 
