@@ -65,3 +65,8 @@ def is_psychiatrist(user):
     This method is to check whether user is a psychiatrist
     """
     return user.groups.filter(name='psychiatrist').exists()
+def is_intakeworker(user):
+    """
+    This method is to check whether user is a intakeworker.
+    """
+    return user.groups.filter(name='intakeWorker').exists()
