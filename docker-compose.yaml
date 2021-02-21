@@ -64,4 +64,5 @@ services:
       - "./frontend:/src/frontend"
     depends_on:
       - backend
+    command: npm start
 

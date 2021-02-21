@@ -244,6 +244,11 @@ const clearanceLevel = [
         value: "psychiatrist",
         label: "Psychiatrist"
     },
+    {
+        value: "intakeWorker",
+        label: "Intake Worker"
+    }
+
 ];
 
 

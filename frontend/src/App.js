@@ -20,6 +20,7 @@ import ClientPersonalInfo from "./ClientPersonalInfo";
 import NurseLanding from './NurseLanding';
 import TreatingPhysicianLanding from './TreatingPhysicianLanding';
 import PsychiatristLanding from './PsychiatristLanding';
+import IntakeWorkerLanding from './IntakeWorkerLanding';
 import Transaction from "./Transaction"
 import SuccessfulRegistration from "./SuccessfulRegistration";
 import LoginError from "./LoginError";
@@ -375,6 +376,20 @@ export default class App extends React.Component {
                             handleHomelessPersonJson={this.handleHomelessPersonJson}
                             handleAppointmentJson={this.handleAppointmentJson}
                         />
+
+                        <PrivateRoute
+                            exact
+                            path={"/intakeWorkerLanding"}
+                            component={IntakeWorkerLanding}
+                            username={this.state.username}
+                            loggedInStatus={this.state.loggedInStatus}
+                            clearanceLevel={this.state.clearanceLevel}
+                            serviceProvider={this.state.serviceProvider}
+                            handleLogout={this.handleLogout}
+                            handleHomelessPersonJson={this.handleHomelessPersonJson}
+                            handleAppointmentJson={this.handleAppointmentJson}
+                        />
+
                         <PrivateRoute
                             exact
                             path={"/clientInfo"}

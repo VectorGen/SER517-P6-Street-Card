@@ -41,7 +41,11 @@ class SocialWorker extends React.Component {
                         this.props.history.push('/treatingPhysicianLanding');
                     } else if (this.state.clearanceLevel == "psychiatrist") {
                         this.props.history.push('/psychiatristLanding');
-                    }else {
+                    }
+                    else if (this.state.clearanceLevel == "intakeWorker") {
+                        this.props.history.push('/intakeWorkerLanding');
+                    }
+                    else {
                         this.props.history.push('/greeter');
                     }
                 });
