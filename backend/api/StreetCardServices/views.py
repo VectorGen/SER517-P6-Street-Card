@@ -16,7 +16,7 @@ from .serializers import UserSerializer, GroupSerializer, SocialWorkerSerializer
     HomelessSerializer, UserNameAndIdMappingSerializer, LogSerializer, \
     AppointmentSerializer, ProductSerializer, TransactionSerializer
 from .tasks import send_email_task, revoke_email_task
-from .utils import primary_key_generator, is_greeter, is_client, is_caseworker, is_service_provider
+from .utils import primary_key_generator, is_greeter, is_client, is_caseworker, is_service_provider, is_intakeworker
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -109,7 +109,8 @@ class UserMapping(viewsets.ModelViewSet):
 class HomelessViewSet(viewsets.ViewSet):
 
     def list(self, request):
-        if is_greeter(request.user) or is_caseworker(request.user):
+        #if True:  
+        if is_greeter(request.user) or is_caseworker(request.user)or is_intakeworker(request.user):
             cache_key = 'homeless'
             data = cache.get(cache_key)
             if data is None:
@@ -123,10 +124,11 @@ class HomelessViewSet(viewsets.ViewSet):
             else:
                 return Response(data, status=status.HTTP_200_OK)
         else:
-            return Response(status=status.HTTP_403_FORBIDDEN)
+            return Response(status=status.HTTP_403_FORBIDDEN) #used to be 403 forbidden
 
     def retrieve(self, request, pk=None):
-        if is_greeter(request.user) or is_client(request.user) or is_caseworker(request.user):
+        #if True: 
+        if is_greeter(request.user) or is_client(request.user) or is_caseworker(request.user) or is_intakeworker(request.user):
             cache_key = 'homeless' + pk
             data = cache.get(cache_key)
             if data is None:
@@ -139,7 +141,7 @@ class HomelessViewSet(viewsets.ViewSet):
                 else:
                     return Response(serializer.data, status=status.HTTP_200_OK)
             else:
-                return Response(data, status=status.HTTP_200_OK)
+                return Response(data, status=status.HTTP_200_OK) 
         else:
             return Response(status=status.HTTP_403_FORBIDDEN)
 

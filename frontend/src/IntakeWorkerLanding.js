@@ -45,7 +45,7 @@ class intakeWorkerLanding extends React.Component {
                         } else if (Math.round(res.status / 100) == 4) {
                             if (window.confirm("Error, invalid client id: " + (res.status).toString())) {
                                 this.state.isClicked = false
-                                this.props.history.push('/intakeWorkerLanding');
+                                this.props.history.push('/clientLanding'); //used to be intakeWorkerLanding
                             }
                             else{
                                 this.state.isClicked = false

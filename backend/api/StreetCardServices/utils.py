@@ -47,3 +47,9 @@ def is_service_provider(user):
     This method is to check whether user is a service provider.
     """
     return user.groups.filter(name='service_provider').exists()
+
+def is_intakeworker(user):
+    """
+    This method is to check whether user is a intakeworker.
+    """
+    return user.groups.filter(name='intakeWorker').exists()
