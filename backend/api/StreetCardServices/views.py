@@ -110,7 +110,7 @@ class HomelessViewSet(viewsets.ViewSet):
 
     def list(self, request):
         #if True:  
-        if is_greeter(request.user) or is_caseworker(request.user)or is_intakeworker(request.user):
+        if is_greeter(request.user) or is_caseworker(request.user) or is_intakeworker(request.user):
             cache_key = 'homeless'
             data = cache.get(cache_key)
             if data is None:
@@ -128,7 +128,7 @@ class HomelessViewSet(viewsets.ViewSet):
 
     def retrieve(self, request, pk=None):
         #if True: 
-        if is_greeter(request.user) or is_client(request.user) or is_caseworker(request.user) or is_intakeworker(request.user):
+        if is_greeter(request.user) or is_client(request.user) or is_caseworker(request.user) or is_nurse(request.user) or is_intakeworker(request.user):
             cache_key = 'homeless' + pk
             data = cache.get(cache_key)
             if data is None:

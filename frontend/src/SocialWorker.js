@@ -13,6 +13,8 @@ class SocialWorker extends React.Component {
         if (this.props.loggedInStatus === "LOGGED_IN") {
             var localClearanceLevel = '';
             var localserviceProvider = '';
+            var localdegreeLevel = '';
+            var localfullName = '';
             fetch(process.env.REACT_APP_IP + 'user/' + this.props.username + '/', {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -20,13 +22,19 @@ class SocialWorker extends React.Component {
             })
                 .then(res => res.json())
                 .then(json => {
+
                     localClearanceLevel = json.user.socialWorker.clearanceLevel;
                     localserviceProvider = json.user.socialWorker.serviceProvider;
+
                     this.setState({
                         clearanceLevel: localClearanceLevel,
-                        serviceProvider: localserviceProvider
+                        serviceProvider: localserviceProvider,
                     });
-                    this.props.method(this.state.clearanceLevel, this.state.serviceProvider);
+
+                    console.log(this.props)
+                    console.log(this.state)
+
+                    this.props.method(this.state.clearanceLevel, this.state.serviceProvider, this.state.degreeLevel, this.state.fullName);
                     if (this.state.clearanceLevel == "caseworker") {
                         this.props.history.push('/socialWorkerRegister');
                     } else if (this.state.clearanceLevel == "client") {
@@ -36,14 +44,14 @@ class SocialWorker extends React.Component {
                     } else if (this.state.clearanceLevel == "admin") {
                         this.props.history.push('/socialWorkerRegister');
                     } else if (this.state.clearanceLevel == "nurse") {
-                        this.props.history.push('/nurseLanding');
+                        this.props.history.push('/medicalPersonnelLanding');
                     } else if (this.state.clearanceLevel == "treating_physician") {
-                        this.props.history.push('/treatingPhysicianLanding');
+                        this.props.history.push('/medicalPersonnelLanding');
                     } else if (this.state.clearanceLevel == "psychiatrist") {
-                        this.props.history.push('/psychiatristLanding');
+                        this.props.history.push('/medicalPersonnelLanding');
                     }
                     else if (this.state.clearanceLevel == "intakeWorker") {
-                        this.props.history.push('/intakeWorkerLanding');
+                        this.props.history.push('/medicalPersonnelLanding');
                     }
                     else {
                         this.props.history.push('/greeter');

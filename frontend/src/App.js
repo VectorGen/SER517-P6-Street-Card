@@ -17,10 +17,8 @@ import viewAllEnrollment from './viewAllEnrollment'
 import viewEnrollmentDetails from './viewEnrollmentDetails'
 import ClientLanding from './ClientLanding'
 import ClientPersonalInfo from "./ClientPersonalInfo";
-import NurseLanding from './NurseLanding';
-import TreatingPhysicianLanding from './TreatingPhysicianLanding';
-import PsychiatristLanding from './PsychiatristLanding';
-import IntakeWorkerLanding from './IntakeWorkerLanding';
+import ClientMedicalInfo from "./ClientMedicalInfo";
+import MedicalPersonnelLanding from './MedicalPersonnelLanding';
 import Transaction from "./Transaction"
 import SuccessfulRegistration from "./SuccessfulRegistration";
 import LoginError from "./LoginError";
@@ -53,6 +51,8 @@ export default class App extends React.Component {
         this.state = {
             loggedInStatus: localStorage.getItem('token') ? "LOGGED_IN" : "NOT_LOGGED_IN",
             username: '',
+            fullName: '',
+            degreeLevel: '',
             homelessPersonId: 0,
             homelessData: {},
             homelessInventoryData: [],
@@ -379,19 +379,6 @@ export default class App extends React.Component {
 
                         <PrivateRoute
                             exact
-                            path={"/intakeWorkerLanding"}
-                            component={IntakeWorkerLanding}
-                            username={this.state.username}
-                            loggedInStatus={this.state.loggedInStatus}
-                            clearanceLevel={this.state.clearanceLevel}
-                            serviceProvider={this.state.serviceProvider}
-                            handleLogout={this.handleLogout}
-                            handleHomelessPersonJson={this.handleHomelessPersonJson}
-                            handleAppointmentJson={this.handleAppointmentJson}
-                        />
-
-                        <PrivateRoute
-                            exact
                             path={"/clientInfo"}
                             component={ClientPersonalInfo}
                             username={this.state.username}
@@ -406,35 +393,27 @@ export default class App extends React.Component {
 
                         <PrivateRoute
                             exact
-                            path={"/nurseLanding"}
-                            component={NurseLanding}
+                            path={"/clientMedicalInfo"}
+                            component={ClientMedicalInfo}
                             username={this.state.username}
                             loggedInStatus={this.state.loggedInStatus}
                             clearanceLevel={this.state.clearanceLevel}
                             serviceProvider={this.state.serviceProvider}
+                            homelessPersonId={this.state.handleHomelessPersonId}
                             handleLogout={this.handleLogout}
-                            handleHomelessPersonJson={this.handleHomelessPersonJson}
-                            handleAppointmentJson={this.handleAppointmentJson}
+                            homelessData={this.state.homelessData}
+                            appointmentData={this.state.xyz}
                         />
+
                         <PrivateRoute
                             exact
-                            path={"/treatingPhysicianLanding"}
-                            component={TreatingPhysicianLanding}
+                            path={"/medicalPersonnelLanding"}
+                            component={MedicalPersonnelLanding}
                             username={this.state.username}
+                            fullName={this.state.fullName}
                             loggedInStatus={this.state.loggedInStatus}
                             clearanceLevel={this.state.clearanceLevel}
-                            serviceProvider={this.state.serviceProvider}
-                            handleLogout={this.handleLogout}
-                            handleHomelessPersonJson={this.handleHomelessPersonJson}
-                            handleAppointmentJson={this.handleAppointmentJson}
-                        />
-                        <PrivateRoute
-                            exact
-                            path={"/psychiatristLanding"}
-                            component={PsychiatristLanding}
-                            username={this.state.username}
-                            loggedInStatus={this.state.loggedInStatus}
-                            clearanceLevel={this.state.clearanceLevel}
+                            degreeLevel={this.state.degreeLevel}
                             serviceProvider={this.state.serviceProvider}
                             handleLogout={this.handleLogout}
                             handleHomelessPersonJson={this.handleHomelessPersonJson}

@@ -8,7 +8,7 @@ import StreetCardFooter from './StreetCardFooter'
 const {Content} = Layout;
 
 
-class TreatingPhysicianLanding extends React.Component {
+class NurseLanding extends React.Component {
 
 
     constructor(props) {
@@ -27,8 +27,13 @@ class TreatingPhysicianLanding extends React.Component {
         this.props.form.validateFieldsAndScroll((err, values) => {
 
             if (!err) {
+                var registerRequestObject = {};
+                registerRequestObject.serviceProvider = this.state.serviceProvider;
+                registerRequestObject.clientName = "";
                 fetch(process.env.REACT_APP_IP + 'homeless/' + values.personId + '/', {
+                    method: 'GET',
                     headers: {
+                        'Content-Type': 'application/json',
                         Authorization: `Bearer ${localStorage.getItem('token')}`
                     }
                 })
@@ -40,26 +45,28 @@ class TreatingPhysicianLanding extends React.Component {
                             })
                             res.json().then(json => {
                                 this.props.handleHomelessPersonJson(json);
-                                this.props.history.push('/clientInfo');
+                                this.props.history.push('/clientMedicalInfo');
                             })
                         } else if (Math.round(res.status / 100) == 4) {
+
                             if (window.confirm("Error, invalid personal id: " + (res.status).toString())) {
                                 this.state.isClicked = false
-                                this.props.history.push('/treatingPhysicianLanding');
+                                this.props.history.push('/medicalPersonnelLanding');
                             }
                             else{
                                 this.state.isClicked = false
-                                this.props.history.push('/treatingPhysicianLanding');
+                                this.props.history.push('/medicalPersonnelLanding');
                             }
 
                         } else if (Math.round(res.status / 100) == 5) {
+
                             if (window.confirm("Server Error: " + (res.status).toString())) {
                                 this.state.isClicked = false
-                                this.props.history.push('/treatingPhysicianLanding');
+                                this.props.history.push('/medicalPersonnelLanding');
                             }
                             else{
                                 this.state.isClicked = false
-                                this.props.history.push('/treatingPhysicianLanding');
+                                this.props.history.push('/medicalPersonnelLanding');
                             }
                         }
                     })
@@ -99,7 +106,6 @@ class TreatingPhysicianLanding extends React.Component {
                 }
             }
         };
-
         if (this.state.isClicked == false) {
             return (
                 <Layout>
@@ -110,7 +116,7 @@ class TreatingPhysicianLanding extends React.Component {
                     />
                     <Content className="content-login">
                         <div className="site-layout-content-login">
-                            <h1>Hello Treating Physician!</h1>
+                            <h1>Hello { this.props.username }!</h1>
                             <Form onSubmit={this.handleSubmit}>
                                 <Form.Item>
                                     {getFieldDecorator('personId', {
@@ -161,8 +167,8 @@ class TreatingPhysicianLanding extends React.Component {
 }
 
 
-const WrappedTreatingPhysicianTreatingPhysicianLanding = Form.create({name: "treatingPhysicianLanding"})(
-    TreatingPhysicianLanding
+const WrappedNurseNurseLanding = Form.create({name: "nurseLanding"})(
+    NurseLanding
 );
 
-export default WrappedTreatingPhysicianTreatingPhysicianLanding;
+export default WrappedNurseNurseLanding;

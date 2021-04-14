@@ -31,7 +31,11 @@ export default class SiderComponentSocialWorker extends React.Component {
                     selectedKey: 2
                 })
                 break;
-        
+            case '3':
+                this.props.setPagecomponent('registerMedicalPersonnel')
+                this.setState({
+                    selectedKey: 3
+                })
         }
     };
 
@@ -59,6 +63,11 @@ export default class SiderComponentSocialWorker extends React.Component {
                                     <span className="nav-text">
                                         <UserOutlined/>
                                         Update Password</span>
+                        </Menu.Item>
+                        <Menu.Item className="menuKey" key="3">
+                                    <span className="nav-text">
+                                        <UserOutlined/>
+                                        Register Medical Personnel</span>
                         </Menu.Item>
                     </Menu>
                 </div>

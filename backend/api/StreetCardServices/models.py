@@ -254,8 +254,22 @@ class SocialWorker(models.Model):
         PSYCHIATRIST = "psychiatrist", _("Psychiatrist")
         INTAKE_WORKER = "intakeWorker", _("Intake Worker")
 
+    class DegreeLevel(models.TextChoices):
+        """
+        This class is for social worker degree level
+        """
+        BACHELORS_SCIENCE_NURSING = "BSN", _("BSN")
+        MEDICAL_DOCTOR = "MD", _("MD")
+        REGISTERED_NURSE = "RN", _("RN")
+        CERTIFIED_NURSE_PRACTICIONER = "CNP", _("CNP")
+        BACHELORS_ARTS = "BA", _("BA")
+        MASTERS_DEGREE = "MS", _("MS")
+        DOCTOR_OF_PHILOSOPHY = "PhD", _("PhD")
+        NOT_APPLICABLE = "N/A", _("N/A")
+
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     clearanceLevel = models.TextField(choices=ClearanceLevel.choices)
+    degreeLevel = models.TextField(choices=DegreeLevel.choices, default='N/A')
     address = models.CharField(max_length=500)
     serviceProvider = models.TextField(choices=ServiceProvider.choices)
 

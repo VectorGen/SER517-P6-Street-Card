@@ -28,7 +28,7 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
 class SocialWorkerSerializer(ModelSerializer):
     class Meta:
         model = SocialWorker
-        fields = ('clearanceLevel', 'address', 'serviceProvider')
+        fields = ('clearanceLevel', 'address', 'serviceProvider', 'degreeLevel')
 
 
 class HomelessSerializer(ModelSerializer):

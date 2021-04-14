@@ -2,11 +2,11 @@ version: "3.2"
 services:
   db:
     container_name: db
-    image: jcahal/streetcard_db
+    image: vectorgen/streetcard_db
     ports: 
       - "5432:5432"
   pgadmin:
-    image: jcahal/streetcard_pgadmin
+    image: vectorgen/streetcard_pgadmin
     container_name: pgadmin
     depends_on:
       - db
@@ -30,7 +30,7 @@ services:
       - "5672:5672"
   backend:
     container_name: backend
-    image: jcahal/streetcard_backend
+    image: vectorgen/streetcard_backend
     depends_on:
       - db
     env_file:
@@ -50,7 +50,7 @@ services:
       - rabbit
   frontend:
     container_name: frontend
-    image: jcahal/streetcard_frontend
+    image: vectorgen/streetcard_frontend
     stdin_open: true
     env_file:
       - ./frontend/.env

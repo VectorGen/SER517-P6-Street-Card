@@ -231,7 +231,25 @@ const clearanceLevel = [
     {
         value: "admin",
         label: "Admin"
+    }
+];
+
+const degreeLevel = [
+    {
+        value: "ba",
+        label: "BA"
     },
+    {
+        value: "ms",
+        label: "MS"
+    },
+    {
+        value: "phd",
+        label: "PhD"
+    },
+];
+
+const healthCareLevel = [
     {
         value: "nurse",
         label: "Nurse"
@@ -249,6 +267,25 @@ const clearanceLevel = [
         label: "Intake Worker"
     }
 
+];
+
+const healthDegreeLevel = [
+    {
+        value: "bsn",
+        label: "BSN"
+    },
+    {
+        value: "md",
+        label: "MD"
+    },
+    {
+        value: "rn",
+        label: "RN"
+    },
+    {
+        value: "cnp",
+        label: "CNP"
+    }
 ];
 
 
@@ -395,7 +432,16 @@ class RegistrationForm extends React.Component {
                 registerRequestObject.password = values.password;
 
                 var socialWorker = {};
-                socialWorker.clearanceLevel = values.clearanceLevel[0];
+                if (values.healthCareLevel) {
+                    socialWorker.clearanceLevel = values.healthCareLevel[0];
+                } else {
+                    socialWorker.clearanceLevel = values.clearanceLevel[0];
+                }
+                if (values.healthDegreeLevel) {
+                    socialWorker.degreeLevel = values.healthDegreeLevel[0];
+                } else {
+                    socialWorker.degreeLevel = values.degreeLevel[0];
+                }
                 socialWorker.address = values.address;
                 socialWorker.serviceProvider = values.serviceProvider[0];
 
@@ -413,7 +459,6 @@ class RegistrationForm extends React.Component {
                     .then(res => {
                         if (res.status === 201) {
                             this.props.history.push('/successful');
-                            console.log(res.json)
                         }
                         else {
                             this.props.history.push('/error');
@@ -1159,6 +1204,205 @@ class RegistrationForm extends React.Component {
                     </Layout>
                 );
             }
+            else if (this.state.pageComponent === "registerMedicalPersonnel")
+            {
+                return (
+                    <Layout className="layout">
+                        <Header
+                            handleSuccessfulLogoutAction={this.handleSuccessfulLogoutAction}
+                            loggedInStatus={this.state.loggedInStatus}
+                        />
+                        <Layout>
+                            <SiderComponentSocialWorker
+                                setPagecomponent={this.setPagecomponent}
+                            />
+                            <Content className="content-login">
+                                <div className="site-layout-content-login">
+                                    <Form onSubmit={this.handleSocialWorkerRegistrationSubmit}>
+                                        <Row gutter={36}>
+                                            <Col span={12}>
+                                                <Form.Item>
+                                                    {getFieldDecorator("username", {
+                                                        initialValue: this.state.username,
+                                                        rules: [
+                                                            {
+                                                                required: true,
+                                                                message: "Please input your username!",
+                                                                whitespace: true
+                                                            }
+                                                        ]
+                                                    })(<Input
+                                                        prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
+                                                        placeholder="Username"/>)}
+                                                </Form.Item>
+                                            </Col>
+                                            <Col span={12}>
+                                                <Form.Item>
+                                                    {getFieldDecorator("email", {
+                                                        rules: [
+                                                            {
+                                                                type: "email",
+                                                                message: "The input is not valid E-mail!"
+                                                            },
+                                                            {
+                                                                required: true,
+                                                                message: "Please input your E-mail!"
+                                                            }
+                                                        ]
+                                                    })(<Input
+                                                        prefix={<Icon type="mail" style={{color: 'rgba(0,0,0,.25)'}}/>}
+                                                        placeholder="E-mail"/>)}
+                                                </Form.Item>
+                                            </Col>
+                                        </Row>
+                                        <Row gutter={36}>
+
+                                            <Col span={12}>
+                                                <Form.Item hasFeedback>
+                                                    {getFieldDecorator("password", {
+                                                        rules: [
+                                                            {
+                                                                required: true,
+                                                                message: "Please input your password!"
+                                                            },
+                                                            {
+                                                                validator: this.validateToNextPassword
+                                                            }
+                                                        ]
+                                                    })(<Input.Password
+                                                        prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
+                                                        placeholder="Password"/>)}
+                                                </Form.Item>
+
+                                            </Col>
+                                            <Col span={12}>
+                                                <Form.Item hasFeedback className="register-ant-form-item">
+                                                    {getFieldDecorator("confirm", {
+                                                        rules: [
+                                                            {
+                                                                required: true,
+                                                                message: "Please confirm your password!"
+                                                            },
+                                                            {
+                                                                validator: this.compareToFirstPassword
+                                                            }
+                                                        ]
+                                                    })(<Input.Password
+                                                        prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
+                                                        placeholder="Confirm Password"
+                                                        onBlur={this.handleConfirmBlur}/>)}
+                                                </Form.Item>
+                                            </Col>
+                                        </Row>
+                                        <Row gutter={36}>
+                                            <Col span={10}>
+                                                <Form.Item>
+                                                    {getFieldDecorator("first_name", {
+                                                        rules: [
+                                                            {
+                                                                required: true,
+                                                                message: "Please input your first name!",
+                                                                whitespace: true
+                                                            }
+                                                        ]
+                                                    })(<Input
+                                                        prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
+                                                        placeholder="First Name"/>)}
+                                                </Form.Item>
+                                            </Col>
+                                            <Col span={10}>
+                                                <Form.Item>
+                                                    {getFieldDecorator("last_name", {
+                                                        rules: [
+                                                            {
+                                                                message: "Please input your last name!",
+                                                                whitespace: true
+                                                            }
+                                                        ]
+                                                    })(<Input
+                                                        prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
+                                                        placeholder="Last Name"/>)}
+                                                </Form.Item>
+                                            </Col>
+                                            <Col span={4}>
+                                                <Form.Item>
+                                                    {getFieldDecorator("healthDegreeLevel", {
+                                                        rules: [
+                                                            {
+                                                                type: "array",
+                                                                required: true,
+                                                                message: "Please select your health degree!"
+                                                            }
+                                                        ]
+                                                    })(<Cascader options={healthDegreeLevel}
+                                                                 placeholder="Deg"/>)}
+                                                </Form.Item>
+                                            </Col>
+                                        </Row>
+                                        <Row gutter={36}>
+                                            <Col span={12}>
+                                                <Form.Item>
+                                                    {getFieldDecorator("serviceProvider", {
+                                                        rules: [
+                                                            {
+                                                                type: "array",
+                                                                required: true,
+                                                                message: "Please select your role!"
+                                                            }
+                                                        ]
+                                                    })(<Cascader options={serviceProvider}
+                                                                 placeholder="Service Provider"/>)}
+                                                </Form.Item>
+                                            </Col>
+                                            <Col span={12}>
+                                                <Form.Item>
+                                                    {getFieldDecorator("healthCareLevel", {
+                                                        rules: [
+                                                            {
+                                                                type: "array",
+                                                                required: true,
+                                                                message: "Please input your clearence level"
+                                                            }
+                                                        ]
+                                                    })(<Cascader options={healthCareLevel}
+                                                                 placeholder="Clearence Level"/>)}
+                                                </Form.Item>
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col span={24}>
+                                                <Form.Item>
+                                                    {getFieldDecorator("address", {
+                                                        rules: [
+                                                            {
+                                                                message: "Please input your address!",
+                                                                whitespace: true
+                                                            }
+                                                        ]
+                                                    })(<Input
+                                                        prefix={<Icon type="home" style={{color: 'rgba(0,0,0,.25)'}}/>}
+                                                        placeholder="Address"/>)}
+                                                </Form.Item>
+                                            </Col>
+                                        </Row>
+                                        <Row gutter={36}>
+                                            <Col span={12}>
+                                                <Form.Item>
+                                                    <Button type="primary" htmlType="submit"
+                                                            className="registration-submit-button">
+                                                        Submit
+                                                    </Button>
+                                                </Form.Item>
+                                            </Col>
+                                        </Row>
+                                    </Form>
+                                </div>
+                            </Content>
+                        </Layout>
+                        <StreetCardFooter/>
+                    </Layout>
+                );
+            }
             else {
                 return (
                     <Layout className="layout">
@@ -1249,7 +1493,7 @@ class RegistrationForm extends React.Component {
                                             </Col>
                                         </Row>
                                         <Row gutter={36}>
-                                            <Col span={12}>
+                                            <Col span={10}>
                                                 <Form.Item>
                                                     {getFieldDecorator("first_name", {
                                                         rules: [
@@ -1264,7 +1508,7 @@ class RegistrationForm extends React.Component {
                                                         placeholder="First Name"/>)}
                                                 </Form.Item>
                                             </Col>
-                                            <Col span={12}>
+                                            <Col span={10}>
                                                 <Form.Item>
                                                     {getFieldDecorator("last_name", {
                                                         rules: [
@@ -1276,6 +1520,20 @@ class RegistrationForm extends React.Component {
                                                     })(<Input
                                                         prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
                                                         placeholder="Last Name"/>)}
+                                                </Form.Item>
+                                            </Col>
+                                            <Col span={4}>
+                                                <Form.Item>
+                                                    {getFieldDecorator("degreeLevel", {
+                                                        rules: [
+                                                            {
+                                                                type: "array",
+                                                                required: true,
+                                                                message: "Please select your degree!"
+                                                            }
+                                                        ]
+                                                    })(<Cascader options={degreeLevel}
+                                                                 placeholder="Deg"/>)}
                                                 </Form.Item>
                                             </Col>
                                         </Row>
