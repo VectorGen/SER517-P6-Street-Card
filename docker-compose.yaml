@@ -2,11 +2,11 @@ version: "3.2"
 services:
   db:
     container_name: db
-    image: vectorgen/streetcard_db
+    image: postgres
     ports: 
       - "5432:5432"
   pgadmin:
-    image: vectorgen/streetcard_pgadmin
+    image: dpage/pgadmin4
     container_name: pgadmin
     depends_on:
       - db
@@ -30,15 +30,13 @@ services:
       - "5672:5672"
   backend:
     container_name: backend
-    image: vectorgen/streetcard_backend
     depends_on:
       - db
     env_file:
       - ./backend/.env
-    # Build not necessary because image is kept in repo
-    #build:
-    #  context: ./backend
-    #  dockerfile: Dockerfile
+    build:
+     context: ./backend
+     dockerfile: Dockerfile
     ports:
       - "8000:8000"
     volumes: 
@@ -50,14 +48,12 @@ services:
       - rabbit
   frontend:
     container_name: frontend
-    image: vectorgen/streetcard_frontend
     stdin_open: true
     env_file:
       - ./frontend/.env
-    # Build not necessary because image is kept in repo  
-    #build:
-    #  context: ./frontend
-    #  dockerfile: Dockerfile
+    build:
+     context: ./frontend
+     dockerfile: Dockerfile
     ports:
       - "80:3000"
     volumes: 
