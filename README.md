@@ -24,65 +24,17 @@ benefits for Service Providers.
 
 #### 3.1 Quick Installation Guide Using Docker(on your local system):
 
-- Clone the git repository. 
-
-   > ```git clone https://github.com/ansamant/SER517-P6-Street-Card.git```
-
 - Install docker on your local system. (https://docs.docker.com/get-docker/)
 
 - Install docker-compose. (https://docs.docker.com/compose/install/)
 
-- Run  ```sudo service docker start```
+- Start Docker, e.g  ```sudo service docker start```
 
-- Create .env files.
+- Follow the steps in the [Environment Initialization](https://github.com/VectorGen/SER517-P6-Street-Card/wiki/Environment-Initialization) Wiki page
 
-Note: We need environment variables set up to run the web application. 
-We need to have a .env file in /frontend and /backend folders which has a set of environment variables.
+- Go to http://localhost/login 
 
-- Go to /frontend/ (with in the project root folder)
-
-- Create a .env file with keys as shown below.
-
-    > `REACT_APP_KEY=your-google-map-api-key`
-    >
-    > `REACT_APP_IP=http://localhost:8000/`
-
-- Go to /backend/ (with in the project root folder)
-
-- Create a .env file with keys as shown below.
-    > `SECRET_KEY=your-secret-key`
-    >
-    > `DB_USER=your-db-user`
-    >
-    > `DB_PASSWORD=your-db-password`
-    >
-    > `DB_HOST=your-db-host`
-    >
-    > `DB_PORT=your-db-port`
-    >
-    > `DB_NAME=you-db-name`
-    >
-    > `DJANGO_EMAIL_USR=your-user-email`
-    >
-    > `DJANGO_EMAIL_PWD=your-email-password`
-    
-- Switch the celery broker URL in /backend/api/settings.py to localhost as directed.
-
-    > For Development Environment: 'amqp://localhost'
-    >
-    > For Production Environment: 'amqp://guest:guest@rabbit:5672'
-    >
-    > `CELERY_BROKER_URL = 'amqp://localhost'`
-
-- Edit /backend/Dockerfile and add the following command before line 6.
-  
-  > ```python3 manage.py makemigrations && python3 manage.py migrate```
-
-- Run the following docker command . (This is where the magic happens)
-
-    > `docker-compose up -d`
-
-- Go to http://localhost:3000/ 
+## **NOTE:** The following has not been tested with tier 2 medical personnel additions
 
 #### 3.2 Quick Installation Guide Using Docker(on AWS EC2 instance):
 
