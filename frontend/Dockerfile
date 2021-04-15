@@ -1,7 +1,8 @@
 FROM node:lts
 WORKDIR /src/frontend
-COPY package.json /src/frontend
+COPY package.json ./
 RUN npm install
-COPY . /src/frontend
+RUN npm install react-scripts -g
+COPY . ./
 EXPOSE 3000
 CMD ["npm", "start"]

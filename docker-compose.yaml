@@ -3,6 +3,9 @@ services:
   db:
     container_name: db
     image: postgres
+    environment: 
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
     ports: 
       - "5432:5432"
   pgadmin:
@@ -58,7 +61,6 @@ services:
       - "80:3000"
     volumes: 
       - "./frontend:/src/frontend"
+      - '/src/frontend/node_modules'
     depends_on:
       - backend
-    command: npm start
-
