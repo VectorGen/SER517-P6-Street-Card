@@ -236,16 +236,20 @@ const clearanceLevel = [
 
 const degreeLevel = [
     {
-        value: "ba",
+        value: "BA",
         label: "BA"
     },
     {
-        value: "ms",
+        value: "MS",
         label: "MS"
     },
     {
-        value: "phd",
+        value: "PhD",
         label: "PhD"
+    },
+    {
+        value: "N/A",
+        label: "N/A"
     },
 ];
 
@@ -271,21 +275,25 @@ const healthCareLevel = [
 
 const healthDegreeLevel = [
     {
-        value: "bsn",
+        value: "BSN",
         label: "BSN"
     },
     {
-        value: "md",
+        value: "MD",
         label: "MD"
     },
     {
-        value: "rn",
+        value: "RN",
         label: "RN"
     },
     {
-        value: "cnp",
+        value: "SNP",
         label: "CNP"
-    }
+    },
+    {
+        value: "N/A",
+        label: "N/A"
+    },
 ];
 
 
