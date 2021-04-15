@@ -32,7 +32,7 @@ benefits for Service Providers.
 
 - Follow the steps in the [Environment Initialization](https://github.com/VectorGen/SER517-P6-Street-Card/wiki/Environment-Initialization) Wiki page
 
-- Go to http://localhost/login 
+- Go to http://localhost to test Google maps API or http://localhost/login to login.
 
 ## **NOTE:** The following has not been tested with tier 2 medical personnel additions
 
